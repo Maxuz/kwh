@@ -1,0 +1,19 @@
+.header {
+    width: 100%;
+    background-color: #333333;
+}
+
+.header_title {
+    color: white;
+    font-style: italic;
+    font-size: 30px;
+    margin-left: 15px;
+    padding-top: 20px;
+}
+
+.header_description {
+    color: gray;
+    font-size: 12px;
+    margin-left: 40px;
+    padding-bottom: 1px;
+}

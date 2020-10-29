@@ -1,10 +1,17 @@
 <!DOCTYPE HTML>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Welcome page</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Заметки познающего</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="css/style.css" th:href="@{css/style.css}"/>
 </head>
 <body>
-<p>-=Welcome=-</p>
+<div class="header">
+    <div class="header_title">Заметки познающего</div>
+    <div class="header_description">
+        <p>В данном блоге содержаться статьи, заметки и просто мысли на различные темы</p>
+    </div>
+</div>
+
 </body>
 </html>
