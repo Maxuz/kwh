@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Заметки познающего</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{css/style.css}"/>
+</head>
+<body>
+<div class="grid">
+    <header>
+        <div class="header_title">Заметки познающего</div>
+        <div class="header_description">
+            <p>В данном блоге содержаться статьи, заметки и просто мысли на различные темы</p>
+        </div>
+    </header>
+
+    <main>
+        <div>
+            <div class="article">
+                <div th:each="article: ${allArticles}">
+                    <label th:text="${article.id}"/>
+                    <label th:text="${article.title}"/>
+                    <label th:text="${article.content}"/>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+    </footer>
+</div>
+</body>
+</html>

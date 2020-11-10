@@ -19,5 +19,19 @@
         <sql>
             grant select on app_user to kwhuser
         </sql>
+        <createTable  tableName="articles">
+            <column  name="id"  type="int">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="title"  type="varchar(255)">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="content"  type="text">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+        <sql>
+            grant all on articles to kwhuser
+        </sql>
     </changeSet>
 </databaseChangeLog>

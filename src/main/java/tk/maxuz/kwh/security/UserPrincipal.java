@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import tk.maxuz.kwh.database.dao.User;
+import tk.maxuz.kwh.model.User;
 
 import java.util.Collection;
 import java.util.Collections;
