@@ -13,18 +13,21 @@
             <p>В данном блоге содержаться статьи, заметки и просто мысли на различные темы</p>
         </div>
     </header>
-
-    <main>
+<!--    <aside class="sidebar-left">-->
+<!--        Left Sidebar-->
+<!--    </aside>-->
+    <article>
         <div>
-            <div class="article">
-                <div th:each="article: ${allArticles}">
-                    <label th:text="${article.id}"/>
-                    <label th:text="${article.title}"/>
-                    <label th:text="${article.content}"/>
-                </div>
+            <div th:each="article: ${allArticles}">
+                <label th:text="${article.id}"/>
+                <label th:text="${article.title}"/>
+                <label th:text="${article.content}"/>
             </div>
         </div>
-    </main>
+    </article>
+    <aside class="sidebar-right">
+        Right Sidebar
+    </aside>
     <footer>
     </footer>
 </div>
