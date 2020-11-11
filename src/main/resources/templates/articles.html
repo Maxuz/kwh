@@ -13,9 +13,6 @@
             <p>В данном блоге содержаться статьи, заметки и просто мысли на различные темы</p>
         </div>
     </header>
-<!--    <aside class="sidebar-left">-->
-<!--        Left Sidebar-->
-<!--    </aside>-->
     <main>
         <div class="article" th:each="article: ${allArticles}">
             <h2><label th:text="${article.title}"></label></h2>
@@ -24,7 +21,6 @@
         </div>
     </main>
     <aside class="sidebar-right">
-        Right Sidebar
     </aside>
     <footer>
     </footer>
