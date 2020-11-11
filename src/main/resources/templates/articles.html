@@ -16,15 +16,13 @@
 <!--    <aside class="sidebar-left">-->
 <!--        Left Sidebar-->
 <!--    </aside>-->
-    <article>
-        <div>
-            <div th:each="article: ${allArticles}">
-                <label th:text="${article.id}"></label>
-                <label th:text="${article.title}"></label>
-                <label th:text="${article.content}"></label>
-            </div>
+    <main>
+        <div class="article" th:each="article: ${allArticles}">
+            <h2><label th:text="${article.title}"></label></h2>
+
+            <label th:text="${article.content}"></label>
         </div>
-    </article>
+    </main>
     <aside class="sidebar-right">
         Right Sidebar
     </aside>

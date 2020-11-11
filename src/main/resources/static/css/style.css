@@ -1,6 +1,6 @@
 .grid {
     display: grid;
-    grid-template-columns: 150px auto 150px;
+    grid-template-columns: 100px auto 300px;
     grid-template-rows: repeat(3, 100px);
     grid-gap: 1em;
 }
@@ -27,17 +27,21 @@ header {
 }
 
 .sidebar-left {
-    /* Start on Row 2 */
     grid-row: 2;
-    /* Start on the first column line and stop at the next column line */
     grid-column: 1 / 2;
 }
 
-article {
-    /* Start on Row 2 */
+main {
     grid-row: 2;
-    /* Start on the second column line and stop at the third column line */
     grid-column: 2 / 3;
+}
+
+.article {
+    box-shadow: 0 0 5px gray;
+    padding: 10px 30px;
+    min-height: 100px;
+    margin: 10px;
+    border-radius: 5px;
 }
 
 .sidebar-right {
