@@ -19,6 +19,9 @@ public class Article {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "date_time", nullable = false)
-    private LocalDateTime dateTime;
+    @Column(name = "creation_date_time", nullable = false)
+    private LocalDateTime creationDateTime;
+
+    @Column(name = "update_date_time")
+    private LocalDateTime updateDateTime;
 }

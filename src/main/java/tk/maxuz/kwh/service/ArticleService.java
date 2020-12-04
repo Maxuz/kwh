@@ -19,11 +19,23 @@ public class ArticleService {
     }
 
     public List<Article> findAll() {
-        return articleRepository.findAllByOrderByDateTimeDesc();
+        return articleRepository.findAllByOrderByCreationDateTimeDesc();
+    }
+
+    public Article findById(Long id) {
+        return articleRepository.findById(id).orElseThrow();
     }
 
     public void saveArticle(Article article) {
-        article.setDateTime(LocalDateTime.now());
-        articleRepository.save(article);
+        if (article.getId() == null) {
+            article.setCreationDateTime(LocalDateTime.now());
+            articleRepository.save(article);
+        } else {
+            Article editedArticle = articleRepository.findById(article.getId()).orElseThrow();
+            editedArticle.setTitle(article.getTitle());
+            editedArticle.setContent(article.getContent());
+            editedArticle.setUpdateDateTime(LocalDateTime.now());
+            articleRepository.save(editedArticle);
+        }
     }
 }

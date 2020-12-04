@@ -4,12 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 import tk.maxuz.kwh.model.Article;
 import tk.maxuz.kwh.service.ArticleService;
-
-import java.util.List;
 
 @Controller
 public class KwhController {
@@ -29,7 +28,13 @@ public class KwhController {
 
     @RequestMapping({"/addArticle"})
     public String addArticle(Model model) {
-        model.addAttribute("newArticle", new Article());
+        model.addAttribute("article", new Article());
+        return "articles";
+    }
+
+    @RequestMapping({"/editArticle/{id}"})
+    public String editArticle(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("article", articleService.findById(id));
         return "articles";
     }
 
