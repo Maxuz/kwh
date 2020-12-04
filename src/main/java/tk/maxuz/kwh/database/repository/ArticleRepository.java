@@ -6,5 +6,5 @@ import tk.maxuz.kwh.model.Article;
 import java.util.List;
 
 public interface ArticleRepository extends CrudRepository<Article, Long> {
-    List<Article> findAllByOrderByCreationDateTimeDesc();
+    List<Article> findAllByDeletedIsFalseOrderByCreationDateTimeDesc();
 }

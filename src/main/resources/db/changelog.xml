@@ -34,6 +34,9 @@
             <column name="content" type="text">
                 <constraints nullable="false"/>
             </column>
+            <column name="deleted" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
         <sql>
             grant all on articles to kwhuser;

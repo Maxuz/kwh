@@ -19,7 +19,7 @@ public class ArticleService {
     }
 
     public List<Article> findAll() {
-        return articleRepository.findAllByOrderByCreationDateTimeDesc();
+        return articleRepository.findAllByDeletedIsFalseOrderByCreationDateTimeDesc();
     }
 
     public Article findById(Long id) {
@@ -29,6 +29,7 @@ public class ArticleService {
     public void saveArticle(Article article) {
         if (article.getId() == null) {
             article.setCreationDateTime(LocalDateTime.now());
+            article.setDeleted(false);
             articleRepository.save(article);
         } else {
             Article editedArticle = articleRepository.findById(article.getId()).orElseThrow();
@@ -37,5 +38,11 @@ public class ArticleService {
             editedArticle.setUpdateDateTime(LocalDateTime.now());
             articleRepository.save(editedArticle);
         }
+    }
+
+    public void delete(Long id) {
+        Article article = articleRepository.findById(id).orElseThrow();
+        article.setDeleted(true);
+        articleRepository.save(article);
     }
 }

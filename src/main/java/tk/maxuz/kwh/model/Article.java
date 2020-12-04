@@ -24,4 +24,7 @@ public class Article {
 
     @Column(name = "update_date_time")
     private LocalDateTime updateDateTime;
+
+    @Column(name = "deleted")
+    private Boolean deleted;
 }

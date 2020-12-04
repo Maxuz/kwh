@@ -38,6 +38,12 @@ public class KwhController {
         return "articles";
     }
 
+    @RequestMapping({"/deleteArticle/{id}"})
+    public RedirectView deleteArticle(@PathVariable("id") Long id) {
+        articleService.delete(id);
+        return new RedirectView("/");
+    }
+
     @RequestMapping({"/saveArticle"})
     public RedirectView saveArticle(@ModelAttribute("article") Article article) {
         articleService.saveArticle(article);
