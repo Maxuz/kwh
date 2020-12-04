@@ -6,7 +6,6 @@ import tk.maxuz.kwh.database.repository.ArticleRepository;
 import tk.maxuz.kwh.model.Article;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
