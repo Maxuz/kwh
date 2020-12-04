@@ -3,12 +3,14 @@ package tk.maxuz.kwh.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity(name = "articles")
 @Data
 public class Article {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @SequenceGenerator(name = "articles_id_seq", sequenceName = "articles_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "articles_id_seq")
     private Long id;
 
     @Column(name = "title", nullable = false)
@@ -16,4 +18,7 @@ public class Article {
 
     @Column(name = "content", nullable = false)
     private String content;
+
+    @Column(name = "date_time", nullable = false)
+    private LocalDateTime dateTime;
 }

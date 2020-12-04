@@ -6,7 +6,7 @@
 
     <changeSet  id="1"  author="maxuz">
         <createTable  tableName="app_user">
-            <column  name="id"  type="int">
+            <column  name="id"  type="serial">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column  name="name"  type="varchar(50)">
@@ -20,10 +20,13 @@
             grant select on app_user to kwhuser
         </sql>
         <createTable  tableName="articles">
-            <column  name="id"  type="int">
+            <column  name="id"  type="serial">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column  name="title"  type="varchar(255)">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="date_time"  type="timestamp">
                 <constraints  nullable="false"/>
             </column>
             <column  name="content"  type="text">
@@ -31,7 +34,8 @@
             </column>
         </createTable>
         <sql>
-            grant all on articles to kwhuser
+            grant all on articles to kwhuser;
+            grant USAGE on SEQUENCE articles_id_seq to kwhuser;
         </sql>
     </changeSet>
 </databaseChangeLog>

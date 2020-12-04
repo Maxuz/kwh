@@ -1,8 +1,7 @@
 .grid {
     display: grid;
-    grid-template-columns: 50px auto 300px;
-    grid-template-rows: repeat(3, 100px);
-    grid-gap: 1em;
+    grid-template-columns: 400px auto 50px;
+    grid-template-rows: 100px auto 50px;
 }
 
 header {
@@ -14,16 +13,20 @@ header {
 .header_title {
     color: white;
     font-style: italic;
-    font-size: 30px;
-    margin-left: 15px;
-    padding-top: 20px;
+    font-size: 24px;
+    margin-left: 50px;
+    padding-top: 10px;
 }
 
 .header_description {
     color: gray;
     font-size: 12px;
-    margin-left: 40px;
+    margin-left: 80px;
     padding-bottom: 1px;
+}
+
+.add-button {
+    margin: 20px 150px;
 }
 
 .sidebar-left {
@@ -42,6 +45,17 @@ main {
     min-height: 100px;
     margin: 10px;
     border-radius: 5px;
+}
+
+.add-article {
+    box-shadow: 0 0 5px gray;
+    padding: 30px;
+    min-height: 500px;
+    margin: 30px;
+}
+
+#articleContent {
+    min-height: 300px;
 }
 
 .sidebar-right {

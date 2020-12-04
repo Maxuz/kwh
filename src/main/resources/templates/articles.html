@@ -4,6 +4,14 @@
     <title>Заметки познающего</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" media="all" th:href="@{css/style.css}"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.5.3/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="/webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="grid">
@@ -13,12 +21,33 @@
             <p>В данном блоге содержаться статьи, заметки и просто мысли на различные темы</p>
         </div>
     </header>
+    <aside class="sidebar-left">
+        <a type="button" class="btn btn-primary add-button" th:href="@{/addArticle}">+ Add</a>
+    </aside>
     <main>
-        <div class="article" th:each="article: ${allArticles}">
-            <h2><label th:text="${article.title}"></label></h2>
-
-            <label th:text="${article.content}"></label>
+        <div class="add-article" th:if="${newArticle != null}">
+            <form action="#" th:action="@{/saveArticle}" th:object="${newArticle}" method="post">
+                <div class="form-group">
+                    <label for="articleTitle">New article</label>
+                    <input type="text" th:field="*{title}" class="form-control" id="articleTitle" placeholder="Title"/>
+                </div>
+                <div class="form-group">
+                    <label for="articleContent">Content</label>
+                    <textarea class="new-article form-control" aria-label="Content" id="articleContent" th:field="*{content}"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
         </div>
+        <div th:if="${allArticles != null}">
+            <div class="article" th:each="article: ${allArticles}">
+                <h2><label th:text="${article.title}"></label></h2>
+
+                <label th:text="${article.content}"></label>
+                <br/><br/>
+                <label th:text="${#temporals.format(article.dateTime, 'dd-MM-yyyy HH:mm:ss')}"></label>
+            </div>
+        </div>
+
     </main>
     <aside class="sidebar-right">
     </aside>
