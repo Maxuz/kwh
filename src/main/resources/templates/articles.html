@@ -56,9 +56,14 @@
                     <input type="text" th:field="*{title}" class="form-control" id="articleTitle" placeholder="Title"/>
                 </div>
                 <div class="form-group">
-                    <label for="articleContent">Content</label>
+                    <select class="custom-select" id="articleCategory" name="category" th:field="*{category.id}">
+                        <option th:value="${category.id}" th:text="${category.name}"
+                                th:each="category: ${allCategories}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <textarea class="new-article form-control" aria-label="Content" id="articleContent"
-                              th:field="*{content}"></textarea>
+                              th:field="*{content}" placeholder="Content"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary float-right ml-2 mb-2">Save</button>
                 <a class="btn btn-secondary float-right" th:href="@{/}">Cancel</a>

@@ -26,4 +26,11 @@ public class CategoryService {
     public void saveCategory(Category category) {
         categoryRepository.save(category);
     }
+
+    public Category findById(Long id) {
+        if (id == null) {
+            return null;
+        }
+        return categoryRepository.findById(id).orElse(null);
+    }
 }
