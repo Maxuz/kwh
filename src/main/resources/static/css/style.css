@@ -26,12 +26,13 @@ header {
 }
 
 .add-button {
-    margin: 20px 91px;
+    margin: 20px 62px;
 }
 
 .sidebar-left {
     grid-row: 2;
     grid-column: 1 / 2;
+    padding-left: 5px;
 }
 
 main {
@@ -44,11 +45,11 @@ main {
     margin: 10px;
 }
 
-.add-article {
+.add-entity {
     box-shadow: 0 0 5px gray;
-    padding: 30px;
-    min-height: 500px;
+    padding: 30px 30px 55px 30px;
     margin: 30px;
+    border-radius: 5px;
 }
 
 #articleContent {

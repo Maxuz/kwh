@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ArticleRepository extends CrudRepository<Article, Long> {
     List<Article> findAllByDeletedIsFalseOrderByCreationDateTimeDesc();
+
+    List<Article> findAllByCategoryIdAndDeletedIsFalseOrderByCreationDateTimeDesc(Long categoryId);
 }

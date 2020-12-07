@@ -45,4 +45,8 @@ public class ArticleService {
         article.setDeleted(true);
         articleRepository.save(article);
     }
+
+    public List<Article> findAll(Long categoryId) {
+        return articleRepository.findAllByCategoryIdAndDeletedIsFalseOrderByCreationDateTimeDesc(categoryId);
+    }
 }

@@ -4,15 +4,17 @@
     <title>Заметки познающего</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}"/>
-    <link rel="stylesheet" href="/webjars/bootstrap/4.5.3/css/bootstrap.min.css">
+    <!-- scripts-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
-    <script src="/webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+    <script th:src="@{/webjars/bootstrap/4.5.3/js/bootstrap.min.js}"></script>
+    <!-- css-->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}"/>
 </head>
 <body>
 <div class="grid">
@@ -23,11 +25,30 @@
         </div>
     </header>
     <aside class="sidebar-left">
-        <a type="button" class="btn btn-primary add-button" th:href="@{/addArticle}">+ Add</a>
+        <a type="button" class="btn btn-secondary add-button" th:href="@{/addArticle}">+ add article</a>
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action list-group-item-light"
+               th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.requestURI, 'category') ? '' : 'active'}"
+               th:href="@{/}">
+                All
+            </a>
+            <a class="list-group-item list-group-item-action list-group-item-light"
+               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'category/' + category.id) ? 'active' : ''}"
+               th:each="category: ${allCategories}"
+               th:text="${category.name}" th:href="@{/category/{id}(id=${category.id})}">
+            </a>
+            <a class="list-group-item list-group-item-action list-group-item-light"
+               th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'addCategory') ? 'active' : ''}"
+               th:href="@{/addCategory}">
+                + add new category...
+            </a>
+        </div>
+
     </aside>
     <main>
-        <div class="add-article" th:if="${article != null}">
-            <form action="#" th:action="@{/saveArticle}" th:object="${article}" method="post">
+        <!-- Add article form -->
+        <div class="add-entity" th:if="${article != null}">
+            <form th:action="@{/saveArticle}" th:object="${article}" method="post">
                 <!--suppress HtmlFormInputWithoutLabel -->
                 <input style="visibility: hidden; display: none" th:field="*{id}"/>
                 <div class="form-group">
@@ -39,11 +60,26 @@
                     <textarea class="new-article form-control" aria-label="Content" id="articleContent"
                               th:field="*{content}"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-                <a class="btn btn-primary" th:href="@{/}">Cancel</a>
+                <button type="submit" class="btn btn-primary float-right ml-2 mb-2">Save</button>
+                <a class="btn btn-secondary float-right" th:href="@{/}">Cancel</a>
             </form>
         </div>
 
+        <!-- Add category form -->
+        <div class="add-entity" th:if="${newCategory != null}">
+            <form th:action="@{/saveCategory}" th:object="${newCategory}" method="post">
+                <!--suppress HtmlFormInputWithoutLabel -->
+                <input style="visibility: hidden; display: none" th:field="*{id}"/>
+                <div class="form-group">
+                    <label for="categoryName">Category name</label>
+                    <input type="text" th:field="*{name}" class="form-control" id="categoryName" placeholder="Name"/>
+                </div>
+                <button type="submit" class="btn btn-primary float-right ml-2">Save</button>
+                <a class="btn btn-secondary float-right" th:href="@{/}">Cancel</a>
+            </form>
+        </div>
+
+        <!-- Article list -->
         <div th:if="${allArticles != null}">
             <div class="card article" th:each="article: ${allArticles}">
                 <div class="card-body">
@@ -55,7 +91,8 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                                 <a class="dropdown-item" th:href="@{/editArticle/{id}(id=${article.id})}">Edit</a>
-                                <button type="button" class="dropdown-item" data-toggle="modal" data-target="#exampleModal">
+                                <button type="button" class="dropdown-item" data-toggle="modal"
+                                        data-target="#exampleModal">
                                     Delete
                                 </button>
                             </div>
@@ -73,18 +110,20 @@
                 </div>
 
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="confirmDeletionModal" tabindex="-1" role="dialog"
+                     aria-labelledby="confirmDeletionLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Attention</h5>
+                                <h5 class="modal-title" id="confirmDeletionLabel">Attention</h5>
                             </div>
                             <div class="modal-body">
                                 Delete article?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <a class="btn btn-primary" th:href="@{/deleteArticle/{id}(id=${article.id})}">Confirm</a>
+                                <a class="btn btn-primary"
+                                   th:href="@{/deleteArticle/{id}(id=${article.id})}">Confirm</a>
                             </div>
                         </div>
                     </div>
