@@ -6,7 +6,8 @@ CREATE DATABASE kwhdb WITH OWNER=kwhadmin;
 -- drop all
 
 drop table app_user;
-drop table articles;
+drop table article;
+drop table category;
 drop table databasechangelog;
 drop table databasechangeloglock;
 commit;

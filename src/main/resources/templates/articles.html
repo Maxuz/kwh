@@ -63,7 +63,7 @@
                         <h5 class="card-title" th:text="${article.title}"></h5>
                     </div>
 
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                    <h6 class="card-subtitle mb-2 text-muted" th:text="${article.category.name}"></h6>
 
                     <p class="card-text" th:text="${article.content}"></p>
                     <small class="text-muted"
