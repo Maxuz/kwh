@@ -15,33 +15,33 @@ import tk.maxuz.kwh.database.service.DaoUserDetailsService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final DaoUserDetailsService userDetailsService;
+    private final DaoUserDetailsService userDetailsService;
 
-  @Autowired
-  public SecurityConfig(DaoUserDetailsService userDetailsService) {
-    this.userDetailsService = userDetailsService;
-  }
+    @Autowired
+    public SecurityConfig(DaoUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
-  @Override
-  protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userDetailsService);
-  }
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService);
+    }
 
-  @Override
-  protected void configure(final HttpSecurity http) throws Exception {
-    http
-            .csrf().disable()
-            .authorizeRequests()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .and()
-            .logout()
-            .deleteCookies("JSESSIONID");
-  }
+    @Override
+    protected void configure(final HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .and()
+                .logout()
+                .deleteCookies("JSESSIONID");
+    }
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder(31);
-  }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(31);
+    }
 }
