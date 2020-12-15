@@ -52,6 +52,11 @@ main {
     border-radius: 5px;
 }
 
+.add-entity textarea {
+    border: 0;
+    min-height: 200px;
+}
+
 #articleContent {
     min-height: 300px;
 }
@@ -68,4 +73,35 @@ main {
 footer {
     grid-row: 3;
     grid-column: 1 / 4;
+}
+
+code, pre {
+    font-family: "Ubuntu Mono", monospace;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+code {
+    background-color: #f2f2f2;
+    border: solid 1px #ddd;
+    padding: 2px 3px;
+    color: #333333;
+}
+
+pre {
+    padding: 20px;
+    background: #f2f2f2;
+    text-shadow: none;
+    overflow: auto;
+    border-radius: 5px;
+}
+
+pre code {
+    color: #f2f2f2;
+    border: none;
+    padding: 0;
+}
+
+p code {
+    color: #333333;
 }

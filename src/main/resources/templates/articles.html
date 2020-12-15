@@ -7,11 +7,19 @@
     <!-- scripts-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous">
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/commonmark/0.29.3/commonmark.min.js"
+            integrity="sha512-Mq6HFo4kQ6yog5IKk+MflA4KRIB966kfsdk9NpuM1dUOZOcuGEJMVMXeFzTNIXvrzCIOt7t/rmBZOsgkR7IY7w=="
+            crossorigin="anonymous">
+    </script>
     <script th:src="@{/webjars/bootstrap/4.5.3/js/bootstrap.min.js}"></script>
+    <script th:src="@{/script/kwh.js}"></script>
+
     <!-- css-->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}"/>
@@ -62,8 +70,24 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <textarea class="new-article form-control" aria-label="Content" id="articleContent"
-                              th:field="*{content}" placeholder="Content"></textarea>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="btn-group btn-group-sm btn-group-toggle float-right" data-toggle="buttons">
+                                <label class="btn btn-light active">
+                                    <input type="radio" name="options" id="option1" autocomplete="off"
+                                           onclick="showRow()" checked> Row
+                                </label>
+                                <label class="btn btn-light">
+                                    <input type="radio" name="options" id="option2" autocomplete="off"
+                                           onclick="showView()"> View
+                                </label>
+                            </div>
+                        </div>
+                        <div class="card-body" id="articleContentView" style="visibility: hidden; display: none">
+                        </div>
+                        <textarea class="new-article form-control" aria-label="Content" id="articleContentRow"
+                                  th:field="*{content}" placeholder="Content"></textarea>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary float-right ml-2 mb-2">Save</button>
                 <a class="btn btn-secondary float-right" th:href="@{/}">Cancel</a>
@@ -107,7 +131,7 @@
 
                     <h6 class="card-subtitle mb-2 text-muted" th:text="${article.category.name}"></h6>
 
-                    <p class="card-text" th:text="${article.content}"></p>
+                    <p class="card-text" th:utext="${article.content}"></p>
                     <small class="text-muted"
                            th:text="${'Created at: ' + #temporals.format(article.creationDateTime, 'dd-MM-yyyy HH:mm:ss')}"></small>
                     <small class="text-muted" th:if="${article.updateDateTime != null}"

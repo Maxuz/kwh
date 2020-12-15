@@ -1,6 +1,9 @@
 package tk.maxuz.kwh.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.stereotype.Service;
 import tk.maxuz.kwh.database.repository.ArticleRepository;
 import tk.maxuz.kwh.model.Article;
@@ -22,7 +25,16 @@ public class ArticleService {
     }
 
     public List<Article> findAll() {
-        return articleRepository.findAllByDeletedIsFalseOrderByCreationDateTimeDesc();
+        List<Article> articles = articleRepository.findAllByDeletedIsFalseOrderByCreationDateTimeDesc();
+        articles.forEach(a -> a.setContent(convertMarkdown(a.getContent())));
+        return articles;
+    }
+
+    private String convertMarkdown(String row) {
+        Parser parser = Parser.builder().build(); // todo move to a separate service
+        Node document = parser.parse(row);
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        return renderer.render(document);
     }
 
     public Article findById(Long id) {
