@@ -3,34 +3,30 @@ package tk.maxuz.kwh.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.maxuz.kwh.database.repository.CategoryRepository;
-import tk.maxuz.kwh.model.Category;
+import tk.maxuz.kwh.dto.CategoryDto;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class CategoryService {
     private final CategoryRepository categoryRepository;
+    private final CategoryDtoConverter categoryDtoConverter;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository, CategoryDtoConverter categoryDtoConverter) {
         this.categoryRepository = categoryRepository;
+        this.categoryDtoConverter = categoryDtoConverter;
     }
 
-    public List<Category> getAllCategories() {
-        List<Category> categories = new ArrayList<>();
-        categoryRepository.findAll().forEach(categories::add);
-        return categories;
+    public List<CategoryDto> getAllCategories() {
+        return StreamSupport.stream(categoryRepository.findAll().spliterator(), false)
+                .map(categoryDtoConverter::convert)
+                .collect(Collectors.toList());
     }
 
-    public void saveCategory(Category category) {
-        categoryRepository.save(category);
-    }
-
-    public Category findById(Long id) {
-        if (id == null) {
-            return null;
-        }
-        return categoryRepository.findById(id).orElse(null);
+    public void saveCategory(CategoryDto category) {
+        categoryRepository.save(categoryDtoConverter.convert(category));
     }
 }

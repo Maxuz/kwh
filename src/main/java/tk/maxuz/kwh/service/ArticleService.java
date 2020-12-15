@@ -1,60 +1,59 @@
 package tk.maxuz.kwh.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.commonmark.node.Node;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.stereotype.Service;
 import tk.maxuz.kwh.database.repository.ArticleRepository;
+import tk.maxuz.kwh.database.repository.CategoryRepository;
+import tk.maxuz.kwh.dto.ArticleDto;
 import tk.maxuz.kwh.model.Article;
 import tk.maxuz.kwh.model.Category;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class ArticleService {
-
     private final ArticleRepository articleRepository;
-    private final CategoryService categoryService;
+    private final CategoryRepository categoryRepository;
+    private final ArticleDtoConverter articleDtoConverter;
 
-    public ArticleService(ArticleRepository articleRepository, CategoryService categoryService) {
+    public ArticleService(ArticleRepository articleRepository, CategoryRepository categoryRepository,
+                          ArticleDtoConverter articleDtoConverter) {
         this.articleRepository = articleRepository;
-        this.categoryService = categoryService;
+        this.categoryRepository = categoryRepository;
+        this.articleDtoConverter = articleDtoConverter;
     }
 
-    public List<Article> findAll() {
-        List<Article> articles = articleRepository.findAllByDeletedIsFalseOrderByCreationDateTimeDesc();
-        articles.forEach(a -> a.setContent(convertMarkdown(a.getContent())));
-        return articles;
+    public List<ArticleDto> findAll() {
+        return articleRepository.findAllByDeletedIsFalseOrderByCreationDateTimeDesc().stream()
+                .map(articleDtoConverter::convert)
+                .collect(Collectors.toList());
     }
 
-    private String convertMarkdown(String row) {
-        Parser parser = Parser.builder().build(); // todo move to a separate service
-        Node document = parser.parse(row);
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
-        return renderer.render(document);
+    public ArticleDto findById(Long id) {
+        return articleRepository.findById(id)
+                .map(articleDtoConverter::convert)
+                .orElseThrow();
     }
 
-    public Article findById(Long id) {
-        return articleRepository.findById(id).orElseThrow();
-    }
-
-    public void saveArticle(Article article) {
-        Category category = categoryService.findById(article.getCategory().getId());
-        if (article.getId() == null) {
-            article.setCreationDateTime(LocalDateTime.now());
-            article.setDeleted(false);
-            article.setCategory(category);
-            articleRepository.save(article);
-        } else {
-            Article editedArticle = articleRepository.findById(article.getId()).orElseThrow();
-            editedArticle.setTitle(article.getTitle());
-            editedArticle.setContent(article.getContent());
+    public void saveArticle(ArticleDto articleDto) {
+        Optional<Article> optionalArticle = Optional.ofNullable(articleDto.getId()).flatMap(articleRepository::findById);
+        if (optionalArticle.isPresent()) {
+            Article editedArticle = optionalArticle.get();
+            editedArticle.setTitle(articleDto.getTitle());
+            editedArticle.setContent(articleDto.getContent());
             editedArticle.setUpdateDateTime(LocalDateTime.now());
+            Category category = categoryRepository.findById(articleDto.getCategory().getId()).orElseThrow();
             editedArticle.setCategory(category);
             articleRepository.save(editedArticle);
+        } else {
+            Article article = articleDtoConverter.convert(articleDto);
+            article.setCreationDateTime(LocalDateTime.now());
+            article.setDeleted(false);
+            articleRepository.save(article);
         }
     }
 
@@ -64,7 +63,9 @@ public class ArticleService {
         articleRepository.save(article);
     }
 
-    public List<Article> findAll(Long categoryId) {
-        return articleRepository.findAllByCategoryIdAndDeletedIsFalseOrderByCreationDateTimeDesc(categoryId);
+    public List<ArticleDto> findAll(Long categoryId) {
+        return articleRepository.findAllByCategoryIdAndDeletedIsFalseOrderByCreationDateTimeDesc(categoryId).stream()
+                .map(articleDtoConverter::convert)
+                .collect(Collectors.toList());
     }
 }
