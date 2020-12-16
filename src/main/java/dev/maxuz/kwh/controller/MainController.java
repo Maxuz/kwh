@@ -15,12 +15,12 @@ import dev.maxuz.kwh.service.ArticleService;
 import java.util.List;
 
 @Controller
-public class KwhController {
+public class MainController {
     private final ArticleService articleService;
     private final CategoryService categoryService;
 
     @Autowired
-    public KwhController(ArticleService articleService, CategoryService categoryService) {
+    public MainController(ArticleService articleService, CategoryService categoryService) {
         this.articleService = articleService;
         this.categoryService = categoryService;
     }

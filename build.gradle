@@ -4,7 +4,7 @@ plugins {
 	id 'java'
 }
 
-group = 'tk.maxuz'
+group = 'dev.maxuz'
 version = '0.0.1-SNAPSHOT'
 
 configurations {

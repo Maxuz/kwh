@@ -4,6 +4,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"tk.maxuz.kwh.database.repository", "tk.maxuz.kwh.model"})
+@EnableJpaRepositories(basePackages = {"dev.maxuz.kwh.database.repository", "dev.maxuz.kwh.model"})
 public class JpaConfig {
 }
