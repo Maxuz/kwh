@@ -1,7 +1,6 @@
 package dev.maxuz.kwh.database.service;
 
 import dev.maxuz.kwh.database.repository.UserRepository;
-import dev.maxuz.kwh.model.User;
 import dev.maxuz.kwh.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,10 +19,8 @@ public class DaoUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByName(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(username);
-        }
-        return new UserPrincipal(user);
+        return userRepository.findByName(username)
+                .map(UserPrincipal::new)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 }

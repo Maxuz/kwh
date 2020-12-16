@@ -63,7 +63,7 @@ public class ArticleService {
         articleRepository.save(article);
     }
 
-    public List<ArticleDto> findAll(Long categoryId) {
+    public List<ArticleDto> findAllByCategoryId(Long categoryId) {
         return articleRepository.findAllByCategoryIdAndDeletedIsFalseOrderByCreationDateTimeDesc(categoryId).stream()
                 .map(articleDtoConverter::convert)
                 .collect(Collectors.toList());

@@ -151,9 +151,10 @@
                                 Delete article?
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <a class="btn btn-primary"
-                                   th:href="@{/deleteArticle/{id}(id=${article.id})}">Confirm</a>
+                                <form th:action="@{/deleteArticle/{id}(id=${article.id})}" method="post">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Confirm</button>
+                                </form>
                             </div>
                         </div>
                     </div>
