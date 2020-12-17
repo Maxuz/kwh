@@ -72,20 +72,19 @@ class ArticleServiceTest {
     }
 
     @Test
-    void saveArticle_ArticleDoesNotExist() {
-        when(articleRepository.findById(any())).thenReturn(Optional.empty());
+    void saveNewArticle() {
         Category expectedCategory = new Category();
-        when(categoryRepository.findById(eq(321L))).thenReturn(Optional.of(expectedCategory));
         ArticleDto source = new ArticleDto();
         Article convertedArticle = new Article();
         convertedArticle.setTitle("Article title");
         convertedArticle.setCategory(expectedCategory);
         convertedArticle.setContent("Article content");
-        when(articleDtoConverter.convert(eq(source))).thenReturn(convertedArticle);
 
+        when(categoryRepository.findById(eq(321L))).thenReturn(Optional.of(expectedCategory));
+        when(articleDtoConverter.convert(eq(source))).thenReturn(convertedArticle);
         when(articleRepository.save(any())).thenReturn(new Article());
 
-        articleService.saveArticle(source);
+        articleService.saveNewArticle(source);
         ArgumentCaptor<Article> articleArgumentCaptor = ArgumentCaptor.forClass(Article.class);
         verify(articleRepository).save(articleArgumentCaptor.capture());
 
@@ -99,19 +98,14 @@ class ArticleServiceTest {
     }
 
     @Test
-    void saveArticle_ArticleExist() {
+    void editArticle() {
         LocalDateTime creationDateTime = LocalDateTime.now().minusDays(1);
         Article sourceArticle = new Article();
         sourceArticle.setId(123L);
-        sourceArticle.setTitle("Source title");
-        sourceArticle.setCategory(new Category());
-        sourceArticle.setContent("Source content");
         sourceArticle.setCreationDateTime(creationDateTime);
         sourceArticle.setDeleted(false);
 
-        when(articleRepository.findById(any())).thenReturn(Optional.of(sourceArticle));
-        Category editedCategory = new Category();
-        when(categoryRepository.findById(eq(1234L))).thenReturn(Optional.of(editedCategory));
+        Category changedCategory = new Category();
 
         ArticleDto source = new ArticleDto();
         source.setId(123L);
@@ -119,9 +113,11 @@ class ArticleServiceTest {
         source.setContent("Edited content");
         source.setCategory(new CategoryDto(1234L, "Edited category"));
 
+        when(articleRepository.findById(any())).thenReturn(Optional.of(sourceArticle));
         when(articleRepository.save(any())).thenReturn(new Article());
+        when(categoryRepository.findById(eq(1234L))).thenReturn(Optional.of(changedCategory));
 
-        articleService.saveArticle(source);
+        articleService.editArticle(source);
 
         ArgumentCaptor<Article> articleArgumentCaptor = ArgumentCaptor.forClass(Article.class);
         verify(articleRepository).save(articleArgumentCaptor.capture());
@@ -129,7 +125,7 @@ class ArticleServiceTest {
         assertThat(articleArgumentCaptor.getValue().getId(), is(123L));
         assertThat(articleArgumentCaptor.getValue().getTitle(), is("Edited title"));
         assertThat(articleArgumentCaptor.getValue().getContent(), is("Edited content"));
-        assertThat(articleArgumentCaptor.getValue().getCategory(), is(editedCategory));
+        assertThat(articleArgumentCaptor.getValue().getCategory(), is(changedCategory));
         assertThat(articleArgumentCaptor.getValue().getCreationDateTime(), is(creationDateTime));
         assertThat(articleArgumentCaptor.getValue().getUpdateDateTime().withNano(0), is(LocalDateTime.now().withNano(0)));
         assertThat(articleArgumentCaptor.getValue().getDeleted(), is(false));

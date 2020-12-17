@@ -165,7 +165,7 @@ public class MainControllerTest {
                 .andExpect(redirectedUrl("/"));
 
         ArgumentCaptor<ArticleDto> articleArgumentCaptor = ArgumentCaptor.forClass(ArticleDto.class);
-        verify(articleService).saveArticle(articleArgumentCaptor.capture());
+        verify(articleService).saveNewArticle(articleArgumentCaptor.capture());
 
         assertThat(articleArgumentCaptor.getValue().getTitle(), is("New title"));
         assertThat(articleArgumentCaptor.getValue().getContent(), is("New article content"));
@@ -187,7 +187,7 @@ public class MainControllerTest {
                 .andExpect(redirectedUrl("/"));
 
         ArgumentCaptor<ArticleDto> articleArgumentCaptor = ArgumentCaptor.forClass(ArticleDto.class);
-        verify(articleService).saveArticle(articleArgumentCaptor.capture());
+        verify(articleService).editArticle(articleArgumentCaptor.capture());
 
         assertThat(articleArgumentCaptor.getValue().getId(), is(123L));
         assertThat(articleArgumentCaptor.getValue().getTitle(), is("Exist article title"));

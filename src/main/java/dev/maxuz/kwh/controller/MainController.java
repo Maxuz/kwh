@@ -63,7 +63,12 @@ public class MainController {
 
     @RequestMapping(value = {"/saveArticle"} , method = RequestMethod.POST)
     public RedirectView saveArticle(@ModelAttribute("article") ArticleDto article) {
-        articleService.saveArticle(article);
+        if (article.getId() == null) {
+            articleService.saveNewArticle(article);
+        } else {
+            articleService.editArticle(article);
+        }
+
         return new RedirectView("/");
     }
 
