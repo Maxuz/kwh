@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="fragments/general :: header-files">
-    <title>Заметки познающего</title>
+    <title th:text="#{title}"></title>
 </head>
 <body>
 <header th:replace="fragments/general :: header"></header>
@@ -12,11 +12,11 @@
             <!--suppress HtmlFormInputWithoutLabel -->
             <input style="visibility: hidden; display: none" th:field="*{id}"/>
             <div class="form-group">
-                <label for="categoryName">Category name</label>
-                <input type="text" th:field="*{name}" class="form-control" id="categoryName" placeholder="Name"/>
+                <label for="categoryName" th:text="#{category.add.name}"></label>
+                <input type="text" th:field="*{name}" class="form-control" id="categoryName" th:placeholder="#{category.add.name}"/>
             </div>
-            <button type="submit" class="btn btn-primary float-right ml-2">Save</button>
-            <a class="btn btn-secondary float-right" th:href="@{/}">Cancel</a>
+            <button type="submit" class="btn btn-primary float-right ml-2" th:text="#{button.save}"></button>
+            <a class="btn btn-secondary float-right" th:href="@{/}" th:text="#{button.cancel}"></a>
         </form>
     </div>
 </main>

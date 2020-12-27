@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="header-files">
-    <title>Заметки познающего</title>
+    <title th:text="#{title}"></title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- scripts-->
@@ -26,18 +26,17 @@
 </head>
 <body>
 <header th:fragment="header">
-    <div class="header_title">Заметки познающего</div>
+    <div class="header_title" th:text="#{title}"></div>
     <div class="header_description">
-        <p>В данном блоге содержаться статьи, заметки и просто мысли на различные темы</p>
+        <p th:text="#{title-description}"></p>
     </div>
 </header>
 <aside class="sidebar-left" th:fragment="sidebar-left">
-    <a type="button" class="btn btn-secondary add-button" th:href="@{/article/new}">+ add article</a>
+    <a type="button" class="btn btn-secondary add-button" th:href="@{/article/new}" th:text="#{article.add}"></a>
     <div class="list-group">
         <a class="list-group-item list-group-item-action list-group-item-light"
            th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.requestURI, 'category') ? '' : 'active'}"
-           th:href="@{/}">
-            All
+           th:href="@{/}" th:text="#{category.all}">
         </a>
         <a class="list-group-item list-group-item-action list-group-item-light"
            th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'category/' + category.id) ? 'active' : ''}"
@@ -46,8 +45,7 @@
         </a>
         <a class="list-group-item list-group-item-action list-group-item-light"
            th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'addCategory') ? 'active' : ''}"
-           th:href="@{/category/new}">
-            + add new category...
+           th:href="@{/category/new}" th:text="#{category.add}">
         </a>
     </div>
 </aside>
