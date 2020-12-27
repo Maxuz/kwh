@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/general :: header-files">
+    <title>Заметки познающего</title>
+</head>
+<body>
+<header th:replace="fragments/general :: header"></header>
+<aside th:replace="fragments/general :: sidebar-left"></aside>
+<main>
+    <div th:if="${allArticles != null}">
+        <div class="card article" th:each="article: ${allArticles}">
+            <div class="card-body">
+                <div>
+                    <div id="articleActionsButton">
+                        <button class="btn btn-light dropdown-toggle btn-sm" type="button" id="dropdownMenu"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            ...
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                            <a class="dropdown-item" th:href="@{/article/{id}(id=${article.id})}">Edit</a>
+                            <button type="button" class="dropdown-item" data-toggle="modal"
+                                    data-target="#confirmDeletionModal">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                    <h5 class="card-title" th:text="${article.title}"></h5>
+                </div>
+
+                <h6 class="card-subtitle mb-2 text-muted" th:text="${article.category.name}"></h6>
+
+                <p class="card-text" th:utext="${article.content}"></p>
+                <small class="text-muted"
+                       th:text="${'Created at: ' + #temporals.format(article.creationDateTime, 'dd-MM-yyyy HH:mm:ss')}"></small>
+                <small class="text-muted" th:if="${article.updateDateTime != null}"
+                       th:text="${'Edited at:' + #temporals.format(article.updateDateTime, 'dd-MM-yyyy HH:mm:ss')}"></small>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="confirmDeletionModal" tabindex="-1" role="dialog"
+                 aria-labelledby="confirmDeletionLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmDeletionLabel">Attention</h5>
+                        </div>
+                        <div class="modal-body">
+                            Delete article?
+                        </div>
+                        <div class="modal-footer">
+                            <form th:action="@{/deleteArticle/{id}(id=${article.id})}" method="post">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Confirm</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<aside th:replace="fragments/general :: sidebar-right"></aside>
+<footer th:replace="fragments/general :: footer"></footer>
+</body>
+</html>

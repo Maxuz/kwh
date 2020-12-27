@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/general :: header-files">
+    <title>Заметки познающего</title>
+</head>
+<body>
+<header th:replace="fragments/general :: header"></header>
+<aside th:replace="fragments/general :: sidebar-left"></aside>
+<main>
+    <div class="add-entity" th:if="${article != null}">
+        <form th:action="@{/article}" th:object="${article}" method="post">
+            <!--suppress HtmlFormInputWithoutLabel -->
+            <input style="visibility: hidden; display: none" th:field="*{id}"/>
+            <div class="form-group">
+                <label for="articleTitle">Article</label>
+                <input type="text" th:field="*{title}" class="form-control" id="articleTitle" placeholder="Title"/>
+            </div>
+            <div class="form-group">
+                <!--suppress HtmlFormInputWithoutLabel -->
+                <select class="custom-select" id="articleCategory" name="category" th:field="*{category.id}">
+                    <option th:value="${category.id}" th:text="${category.name}"
+                            th:each="category: ${allCategories}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="btn-group btn-group-sm btn-group-toggle float-right" data-toggle="buttons">
+                            <label class="btn btn-light active">
+                                <input type="radio" name="options" id="option1" autocomplete="off"
+                                       onclick="showRow()" checked> Row
+                            </label>
+                            <label class="btn btn-light">
+                                <input type="radio" name="options" id="option2" autocomplete="off"
+                                       onclick="showView()"> View
+                            </label>
+                        </div>
+                    </div>
+                    <div class="card-body" id="articleContentView" style="visibility: hidden; display: none">
+                    </div>
+                    <textarea class="new-article form-control" aria-label="Content" id="articleContentRow"
+                              th:field="*{content}" placeholder="Content"></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary float-right ml-2 mb-2">Save</button>
+            <a class="btn btn-secondary float-right" th:href="@{/}">Cancel</a>
+        </form>
+    </div>
+</main>
+<aside th:replace="fragments/general :: sidebar-right"></aside>
+<footer th:replace="fragments/general :: footer"></footer>
+</body>
+</html>

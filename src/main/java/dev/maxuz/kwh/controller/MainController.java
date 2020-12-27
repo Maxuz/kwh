@@ -31,25 +31,25 @@ public class MainController {
     @RequestMapping(value = {"/", "/index.html"}, method = RequestMethod.GET)
     public String articles(Model model) {
         model.addAttribute("allArticles", this.articleService.findAll());
-        return "main";
+        return "articles";
     }
 
     @RequestMapping(value = {"/category/{id}"}, method = RequestMethod.GET)
     public String articles(@PathVariable("id") Long categoryId, Model model) {
         model.addAttribute("allArticles", this.articleService.findAllByCategoryId(categoryId));
-        return "main";
+        return "articles";
     }
 
     @RequestMapping(value = {"/article/new"}, method = RequestMethod.GET)
     public String addArticle(Model model) {
         model.addAttribute("article", new ArticleDto());
-        return "main";
+        return "edit-article";
     }
 
     @RequestMapping(value = {"/article/{id}"}, method = RequestMethod.GET)
     public String editArticle(@PathVariable("id") Long id, Model model) {
         model.addAttribute("article", articleService.findById(id));
-        return "main";
+        return "edit-article";
     }
 
     @RequestMapping(value = {"/deleteArticle/{id}"}, method = RequestMethod.POST)
@@ -71,7 +71,7 @@ public class MainController {
     @RequestMapping(value = {"/category/new"}, method = RequestMethod.GET)
     public String addCategory(Model model) {
         model.addAttribute("newCategory", new CategoryDto());
-        return "main";
+        return "add-category";
     }
 
     @RequestMapping(value = {"/category"}, method = RequestMethod.POST)

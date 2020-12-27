@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/general :: header-files">
+    <title>Заметки познающего</title>
+</head>
+<body>
+<header th:replace="fragments/general :: header"></header>
+<aside th:replace="fragments/general :: sidebar-left"></aside>
+<main>
+    <div class="add-entity" th:if="${newCategory != null}">
+        <form th:action="@{/category}" th:object="${newCategory}" method="post">
+            <!--suppress HtmlFormInputWithoutLabel -->
+            <input style="visibility: hidden; display: none" th:field="*{id}"/>
+            <div class="form-group">
+                <label for="categoryName">Category name</label>
+                <input type="text" th:field="*{name}" class="form-control" id="categoryName" placeholder="Name"/>
+            </div>
+            <button type="submit" class="btn btn-primary float-right ml-2">Save</button>
+            <a class="btn btn-secondary float-right" th:href="@{/}">Cancel</a>
+        </form>
+    </div>
+</main>
+<aside th:replace="fragments/general :: sidebar-right"></aside>
+<footer th:replace="fragments/general :: footer"></footer>
+</body>
+</html>

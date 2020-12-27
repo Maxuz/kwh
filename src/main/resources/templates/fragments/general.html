@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header-files">
+    <title>Заметки познающего</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- scripts-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/commonmark/0.29.3/commonmark.min.js"
+            integrity="sha512-Mq6HFo4kQ6yog5IKk+MflA4KRIB966kfsdk9NpuM1dUOZOcuGEJMVMXeFzTNIXvrzCIOt7t/rmBZOsgkR7IY7w=="
+            crossorigin="anonymous">
+    </script>
+    <script th:src="@{/webjars/bootstrap/4.5.3/js/bootstrap.min.js}"></script>
+    <script th:src="@{/script/kwh.js}"></script>
+
+    <!-- css-->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}"/>
+</head>
+<body>
+<header th:fragment="header">
+    <div class="header_title">Заметки познающего</div>
+    <div class="header_description">
+        <p>В данном блоге содержаться статьи, заметки и просто мысли на различные темы</p>
+    </div>
+</header>
+<aside class="sidebar-left" th:fragment="sidebar-left">
+    <a type="button" class="btn btn-secondary add-button" th:href="@{/article/new}">+ add article</a>
+    <div class="list-group">
+        <a class="list-group-item list-group-item-action list-group-item-light"
+           th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.requestURI, 'category') ? '' : 'active'}"
+           th:href="@{/}">
+            All
+        </a>
+        <a class="list-group-item list-group-item-action list-group-item-light"
+           th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'category/' + category.id) ? 'active' : ''}"
+           th:each="category: ${allCategories}"
+           th:text="${category.name}" th:href="@{/category/{id}(id=${category.id})}">
+        </a>
+        <a class="list-group-item list-group-item-action list-group-item-light"
+           th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'addCategory') ? 'active' : ''}"
+           th:href="@{/category/new}">
+            + add new category...
+        </a>
+    </div>
+</aside>
+<aside class="sidebar-right" th:fragment="sidebar-right">
+</aside>
+<footer th:fragment="footer">
+</footer>
+</body>
+</html>
