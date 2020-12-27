@@ -62,7 +62,7 @@ public class MainControllerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"/", "/index.html", "/addArticle", "/editArticle/1", "/allCategories", "/addCategory"})
+    @ValueSource(strings = {"/", "/index.html", "/article/new", "/article/1", "/allCategories", "/category/new"})
     public void checkGetRequestsAccessWithoutLogin_RedirectionToLoginExpected(String url) throws Exception {
         this.mockMvc.perform(get(url))
                 .andDo(print())
@@ -71,7 +71,7 @@ public class MainControllerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"/", "/index.html", "/deleteArticle/1", "/saveArticle", "/saveCategory"})
+    @ValueSource(strings = {"/", "/index.html", "/article/1/delete", "/article", "/category"})
     public void checkPostRequestsAccessWithoutLogin_RedirectionToLoginExpected(String url) throws Exception {
         this.mockMvc.perform(post(url))
                 .andDo(print())
@@ -117,7 +117,7 @@ public class MainControllerTest {
     public void addArticle_AddArticleExpected() throws Exception {
         ArticleDto articleDto = new ArticleDto();
         articleDto.setCategory(new CategoryDto());
-        this.mockMvc.perform(get("/addArticle"))
+        this.mockMvc.perform(get("/article/new"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("article", is(articleDto)));
@@ -129,7 +129,7 @@ public class MainControllerTest {
         ArticleDto article = fakeArticle();
         when(articleService.findById(anyLong()))
                 .thenReturn(article);
-        this.mockMvc.perform(get("/editArticle/123"))
+        this.mockMvc.perform(get("/article/123"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("article", is(article)));
@@ -159,7 +159,7 @@ public class MainControllerTest {
         params.set("content", "New article content");
         params.set("category.id", "123");
 
-        this.mockMvc.perform(post("/saveArticle").params(params))
+        this.mockMvc.perform(post("/article").params(params))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
@@ -181,7 +181,7 @@ public class MainControllerTest {
         params.set("content", "Exist article content");
         params.set("category.id", "321");
 
-        this.mockMvc.perform(post("/saveArticle").params(params))
+        this.mockMvc.perform(post("/article").params(params))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
@@ -198,7 +198,7 @@ public class MainControllerTest {
     @WithMockUser
     @Test
     public void addCategory_AddCategoryExpected() throws Exception {
-        this.mockMvc.perform(get("/addCategory"))
+        this.mockMvc.perform(get("/category/new"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("newCategory", is(new CategoryDto())));
@@ -210,7 +210,7 @@ public class MainControllerTest {
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.set("name", "New category name");
 
-        this.mockMvc.perform(post("/saveCategory").params(params))
+        this.mockMvc.perform(post("/category").params(params))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));

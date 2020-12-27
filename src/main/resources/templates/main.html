@@ -33,7 +33,7 @@
         </div>
     </header>
     <aside class="sidebar-left">
-        <a type="button" class="btn btn-secondary add-button" th:href="@{/addArticle}">+ add article</a>
+        <a type="button" class="btn btn-secondary add-button" th:href="@{/article/new}">+ add article</a>
         <div class="list-group">
             <a class="list-group-item list-group-item-action list-group-item-light"
                th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.requestURI, 'category') ? '' : 'active'}"
@@ -47,7 +47,7 @@
             </a>
             <a class="list-group-item list-group-item-action list-group-item-light"
                th:classappend="${#strings.contains(#httpServletRequest.requestURI, 'addCategory') ? 'active' : ''}"
-               th:href="@{/addCategory}">
+               th:href="@{/category/new}">
                 + add new category...
             </a>
         </div>
@@ -56,7 +56,7 @@
     <main>
         <!-- Add article form -->
         <div class="add-entity" th:if="${article != null}">
-            <form th:action="@{/saveArticle}" th:object="${article}" method="post">
+            <form th:action="@{/article}" th:object="${article}" method="post">
                 <!--suppress HtmlFormInputWithoutLabel -->
                 <input style="visibility: hidden; display: none" th:field="*{id}"/>
                 <div class="form-group">
@@ -97,7 +97,7 @@
 
         <!-- Add category form -->
         <div class="add-entity" th:if="${newCategory != null}">
-            <form th:action="@{/saveCategory}" th:object="${newCategory}" method="post">
+            <form th:action="@{/category}" th:object="${newCategory}" method="post">
                 <!--suppress HtmlFormInputWithoutLabel -->
                 <input style="visibility: hidden; display: none" th:field="*{id}"/>
                 <div class="form-group">
@@ -120,7 +120,7 @@
                                 ...
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                <a class="dropdown-item" th:href="@{/editArticle/{id}(id=${article.id})}">Edit</a>
+                                <a class="dropdown-item" th:href="@{/article/{id}(id=${article.id})}">Edit</a>
                                 <button type="button" class="dropdown-item" data-toggle="modal"
                                         data-target="#confirmDeletionModal">
                                     Delete
