@@ -26,7 +26,8 @@ public class ArticleDtoConverter {
         article.setId(source.getId());
         article.setTitle(source.getTitle());
         article.setCategory(categoryDtoConverter.convert(source.getCategory()));
-        article.setContent(markdownConverter.convertToHtml(source.getContent()));
+        article.setContent(source.getContent());
+        article.setHtmlContent(markdownConverter.convertToHtml(source.getContent()));
         article.setCreationDateTime(source.getCreationDateTime());
         article.setUpdateDateTime(source.getUpdateDateTime());
 

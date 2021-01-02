@@ -28,7 +28,7 @@
 
                 <h6 class="card-subtitle mb-2 text-muted" th:text="${article.category.name}"></h6>
 
-                <p class="card-text" th:utext="${article.content}"></p>
+                <p class="card-text" th:utext="${article.htmlContent}"></p>
                 <small class="text-muted"
                        th:text="${'Created at: ' + #temporals.format(article.creationDateTime, 'dd-MM-yyyy HH:mm:ss')}"></small>
                 <small class="text-muted" th:if="${article.updateDateTime != null}"

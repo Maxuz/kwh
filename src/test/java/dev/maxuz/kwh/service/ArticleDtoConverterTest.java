@@ -43,7 +43,7 @@ class ArticleDtoConverterTest {
         source.setId(123L);
         source.setTitle("Article title");
         source.setCategory(new Category());
-        source.setContent("Article content");
+        source.setContent("# Article content");
         LocalDateTime creationDateTime = LocalDateTime.now().minusDays(1);
         source.setCreationDateTime(creationDateTime);
         LocalDateTime updateDateTime = LocalDateTime.now();
@@ -53,13 +53,14 @@ class ArticleDtoConverterTest {
         assertThat(actual.getId(), is(123L));
         assertThat(actual.getTitle(), is("Article title"));
         assertThat(actual.getCategory(), is(expectedCategory));
-        assertThat(actual.getContent(), is("Converted to html content"));
+        assertThat(actual.getContent(), is("# Article content"));
+        assertThat(actual.getHtmlContent(), is("Converted to html content"));
         assertThat(actual.getCreationDateTime(), is(creationDateTime));
         assertThat(actual.getUpdateDateTime(), is(updateDateTime));
 
         ArgumentCaptor<String> contentArgumentCaptor = ArgumentCaptor.forClass(String.class);
         verify(markdownConverter).convertToHtml(contentArgumentCaptor.capture());
-        assertThat(contentArgumentCaptor.getValue(), is("Article content"));
+        assertThat(contentArgumentCaptor.getValue(), is("# Article content"));
     }
 
     @Test
