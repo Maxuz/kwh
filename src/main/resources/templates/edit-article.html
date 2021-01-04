@@ -42,9 +42,39 @@
                               th:field="*{content}" th:placeholder="#{article.content.placeholder}"></textarea>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary float-right ml-2 mb-2" th:text="#{button.save}"></button>
-            <a class="btn btn-secondary float-right" th:href="@{/}" th:text="#{button.cancel}"></a>
+            <div>
+                <button class="btn btn-light dropdown-toggle float-right ml-2" type="button" id="dropdownMenu"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    ...
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                    <button type="button" class="dropdown-item" data-toggle="modal"
+                            data-target="#confirmDeletionModal" th:text="#{article.btn.delete}">
+                    </button>
+                </div>
+                <button type="submit" class="btn btn-primary float-right ml-2 mb-2" th:text="#{button.save}"></button>
+                <a class="btn btn-secondary float-right" th:href="@{/}" th:text="#{button.cancel}"></a>
+            </div>
         </form>
+
+        <div class="modal fade" id="confirmDeletionModal" tabindex="-1" role="dialog"
+             aria-labelledby="confirmDeletionLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeletionLabel" th:text="#{article.modal-delete.title}"></h5>
+                    </div>
+                    <div class="modal-body" th:text="#{article.modal-delete.body}">
+                    </div>
+                    <div class="modal-footer">
+                        <form th:action="@{/deleteArticle/{id}(id=${article.id})}" method="post">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{article.modal-delete.btn.cancel}"></button>
+                            <button type="submit" class="btn btn-primary" th:text="#{article.modal-delete.btn.confirm}"></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 <aside th:replace="fragments/general :: sidebar-right"></aside>

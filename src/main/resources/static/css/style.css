@@ -61,10 +61,6 @@ main {
     min-height: 300px;
 }
 
-#articleActionsButton {
-    float: right;
-}
-
 .sidebar-right {
     grid-row: 2;
     grid-column: 3 / 4;

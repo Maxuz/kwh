@@ -8,13 +8,14 @@ import org.springframework.util.StringUtils;
 
 @Service
 public class MarkdownConverter {
+    private final Parser parser = Parser.builder().build();
+    private final HtmlRenderer renderer = HtmlRenderer.builder().build();
+
     public String convertToHtml(String row) {
         if (StringUtils.isEmpty(row)) {
             return null;
         }
-        Parser parser = Parser.builder().build();
         Node document = parser.parse(row);
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
         return renderer.render(document);
     }
 }
