@@ -22,25 +22,23 @@
                             th:each="category: ${allCategories}"></option>
                 </select>
             </div>
-            <div class="form-group">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="btn-group btn-group-sm btn-group-toggle float-right" data-toggle="buttons">
-                            <label class="btn btn-light active">
-                                <input type="radio" name="options" id="option1" autocomplete="off"
-                                       onclick="showRow()" checked th:text="#{article.btn.row}">
-                            </label>
-                            <label class="btn btn-light">
-                                <input type="radio" name="options" id="option2" autocomplete="off"
-                                       onclick="showView()" th:text="#{article.btn.view}">
-                            </label>
-                        </div>
+            <div class="form-group card">
+                <div class="card-header">
+                    <div class="btn-group btn-group-sm btn-group-toggle float-right" data-toggle="buttons">
+                        <label class="btn btn-light active">
+                            <input type="radio" name="options" id="option1" autocomplete="off"
+                                   onclick="showRow()" checked th:text="#{article.btn.row}">
+                        </label>
+                        <label class="btn btn-light">
+                            <input type="radio" name="options" id="option2" autocomplete="off"
+                                   onclick="showView()" th:text="#{article.btn.view}">
+                        </label>
                     </div>
-                    <div class="card-body" id="articleContentView" style="visibility: hidden; display: none">
-                    </div>
-                    <textarea class="new-article form-control" aria-label="Content" id="articleContentRow"
-                              th:field="*{content}" th:placeholder="#{article.content.placeholder}"></textarea>
                 </div>
+                <div class="card-body" id="articleContentView" style="visibility: hidden; display: none">
+                </div>
+                <textarea class="form-control" aria-label="Content" id="article-content-row"
+                          th:field="*{content}" th:placeholder="#{article.content.placeholder}"></textarea>
             </div>
             <div>
                 <button class="btn btn-light dropdown-toggle float-right ml-2" type="button" id="dropdownMenu"

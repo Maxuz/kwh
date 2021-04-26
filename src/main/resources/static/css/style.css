@@ -2,6 +2,7 @@ body {
     display: grid;
     grid-template-columns: 250px auto 150px;
     grid-template-rows: 80px auto 50px;
+    height: 100vh;
 }
 
 header {
@@ -50,6 +51,10 @@ main {
     padding: 30px 30px 55px 30px;
     margin: 30px;
     border-radius: 5px;
+}
+
+#article-content-row {
+    height: 55vh;
 }
 
 .add-entity textarea {

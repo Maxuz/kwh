@@ -1,6 +1,6 @@
 function showRow() {
-    let articleContentRowElement = document.getElementById("articleContentRow");
-    let articleContentViewElement = document.getElementById("articleContentView");
+    let articleContentRowElement = document.getElementById("article-content-row");
+    let articleContentViewElement = document.getElementById("article-content-view");
 
     articleContentViewElement.innerHTML = "";
 
@@ -16,8 +16,8 @@ function convertToHtml(input) {
 }
 
 function showView() {
-    let articleContentRowElement = document.getElementById("articleContentRow");
-    let articleContentViewElement = document.getElementById("articleContentView");
+    let articleContentRowElement = document.getElementById("article-content-row");
+    let articleContentViewElement = document.getElementById("article-content-view");
 
     articleContentViewElement.innerHTML = convertToHtml(articleContentRowElement.value);
 
